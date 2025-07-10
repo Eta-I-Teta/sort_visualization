@@ -16,7 +16,3 @@ def draw_array(surface: pygame.surface, arr: list, selected: list = []):
             Rect(color, [size] * 2, [x, y]).draw(surface)
             y -= size
         x += size
-
-def draw_scene(surface: pygame.surface, scene: Scene):
-    MultilineText(scene.name, [15, 15], font_size = 35, color = CONFIG_SCREEN["text_color"]).draw(surface)
-    MultilineText(scene.description, [15, 15 + 50 + 5], font_size = 30, color = CONFIG_SCREEN["text_color"], line_spacing = 0).draw(surface)
