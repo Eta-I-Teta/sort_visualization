@@ -12,3 +12,6 @@ def save_json_file(obj: json, way: str):
 
 def run_python_file(way: str):
     subprocess.run(['python', way])
+
+def move_element(arr: list, from_index: int, to_index: int):
+    return arr.insert(to_index, arr.pop(from_index))
