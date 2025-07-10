@@ -16,6 +16,7 @@ pygame.display.set_caption(CONFIG_SCREEN["window_name"])
 additional_info = None
 
 delay = 0
+arr_lenght = 50
 
 scenes = [
     Scene(
@@ -25,6 +26,17 @@ scenes = [
         "и меняя их местами, если они стоят в неправильном порядке.\n" \
         "Процесс повторяется, пока массив не будет полностью отсортирован.\n", 
         bubble_sort_and_draw,
+    ),
+    Scene(
+        "Сортировка расчёской", 
+        "Сортировка расчёской — улучшение сортировки пузырьком. Её идея\n" \
+        "состоит в том, чтобы «устранить» элементы с небольшими значения в\n" \
+        "конце массива, которые замедляют работу алгоритма. Если при\n" \
+        "пузырьковой и шейкерной сортировках при переборе массива\n" \
+        "сравниваются соседние элементы, то при «расчёсывании» сначала\n" \
+        "берётся достаточно большое расстояние между сравниваемыми\n" \
+        "значениями, а потом оно сужается вплоть до минимального.", 
+        comb_sort_and_draw,
     )
 ]
 selected_scene = 0
@@ -46,7 +58,7 @@ while running:
 
             if (event.key == pygame.K_RETURN) and (not sorting):
                 arr = []
-                for i in range(50): arr.append(i + 1)
+                for i in range(arr_lenght): arr.append(i + 1)
                 random.shuffle(arr)
                 sorting = True
                 additional_info = None
@@ -64,7 +76,6 @@ while running:
                     selected_scene += 1
                 else:
                     selected_scene = 0
-
             if (event.key == pygame.K_a) and (not sorting):
                 if (selected_scene != 0):
                     selected_scene -= 1
@@ -72,9 +83,14 @@ while running:
                     selected_scene = len(scenes) - 1
             
             if event.key == pygame.K_w:
-                delay = min(1.5, round(delay + 0.1, 1))
+                delay = min(1.5, round(delay + 0.05, 2))
             if event.key == pygame.K_s:
-                delay = max(0, round(delay - 0.1, 1))
+                delay = max(0, round(delay - 0.05, 2))
+            
+            if (event.key == pygame.K_e) and (not sorting):
+                arr_lenght = min(250, arr_lenght + 5)
+            if (event.key == pygame.K_q) and (not sorting):
+                arr_lenght = max(10, arr_lenght - 5)
     
     # Обновление игрового состояния
     # (здесь будет ваша игровая логика)
@@ -83,21 +99,22 @@ while running:
     screen.fill(CONFIG_SCREEN["bg_color"])
 
     MultilineText(
-        f"Задержка: {delay} с", 
-        [15, CONFIG_SCREEN["height"] - 16 - 15], 
+        scenes[selected_scene].name, 
+        [15, 15], 
+        font_size = 30, 
+        color = CONFIG_SCREEN["text_color"],
+        font_family = CONFIG_SCREEN["font_family"]
+    ).draw(screen)
+    MultilineText(
+        f"Задержка: {delay} с\n" \
+        f"Длина массива {arr_lenght}", 
+        [15, CONFIG_SCREEN["height"] - 16 * 2 - 5 - 15], 
         font_size = 16, 
         color = CONFIG_SCREEN["text_color"],
         font_family = CONFIG_SCREEN["font_family"]
     ).draw(screen)
 
     if not sorting:
-        MultilineText(
-            scenes[selected_scene].name, 
-            [15, 15], 
-            font_size = 30, 
-            color = CONFIG_SCREEN["text_color"],
-            font_family = CONFIG_SCREEN["font_family"]
-        ).draw(screen)
         MultilineText(
             scenes[selected_scene].description, 
             [15, 15 + 50 + 5], 

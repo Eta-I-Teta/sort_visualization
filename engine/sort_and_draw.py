@@ -35,10 +35,25 @@ def comb_sort_and_draw(surface: pygame.surface, arr: list, additional_info, dela
         draw_array(surface, arr)
         return {
             "stopped_point": 0,
-            "step": len(arr) // 1.247
+            "step": int(len(arr) // 1.247)
         }
     
     stopped_point = additional_info["stopped_point"]
     step = additional_info["step"]
 
-    if 1 == 1: pass
+    if stopped_point + step > len(arr) - 1:
+        draw_array(surface, arr)
+        return {
+            "stopped_point": 0,
+            "step": int(step // 1.247)
+        }
+    else:
+        if arr[stopped_point] > arr[stopped_point + step]:
+            arr[stopped_point], arr[stopped_point + step] = arr[stopped_point + step], arr[stopped_point]
+        draw_array(surface, arr, [stopped_point, stopped_point + step])
+        time.sleep(delay)
+        return {
+            "stopped_point": stopped_point + 1,
+            "step": step
+        }
+        
