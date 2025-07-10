@@ -1,0 +1,11 @@
+{
+    "width": 750,
+    "height": 750,
+    "window_name": "Визуализация сортировок",
+    "FPS": 60,
+
+    "font_family": "data/fonts/dehinted-Font_1.ttf",
+
+    "bg_color": [255, 255, 255],
+    "text_color": [0, 0, 0]
+}
