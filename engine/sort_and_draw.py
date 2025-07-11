@@ -68,26 +68,33 @@ def insertion_sort_and_draw(surface: pygame.surface, arr: list, additional_info,
     stopped_point = additional_info["stopped_point"]
     right_border = additional_info["right_border"]
 
-    if stopped_point != -1:
-        if arr[right_border + 1] > arr[stopped_point]:
-            move_element(arr, right_border + 1, stopped_point + 1)
+    if right_border == len(arr) - 1:
+        return {
+            "stopped_point": 0,
+            "right_border": 0
+        }
+    else:
+        if stopped_point != -1:
+            if arr[right_border + 1] > arr[stopped_point]:
+                move_element(arr, right_border + 1, stopped_point + 1)
+                draw_array(surface, arr, [stopped_point, right_border + 1])
+                time.sleep(delay)
+                return {
+                    "stopped_point": right_border + 1,
+                    "right_border": right_border + 1
+                }
+            else:
+                draw_array(surface, arr, [stopped_point, right_border + 1])
+                time.sleep(delay)
+                return {
+                    "stopped_point": stopped_point - 1,
+                    "right_border": right_border
+                }
+        else:
+            move_element(arr, right_border + 1, 0)
             draw_array(surface, arr, [stopped_point, right_border + 1])
             time.sleep(delay)
             return {
                 "stopped_point": right_border + 1,
                 "right_border": right_border + 1
             }
-        else:
-            draw_array(surface, arr, [stopped_point, right_border + 1])
-            time.sleep(delay)
-            return {
-                "stopped_point": stopped_point - 1,
-                "right_border": right_border
-            }
-    else:
-        draw_array(surface, arr, [stopped_point, right_border + 1])
-        time.sleep(delay)
-        return {
-            "stopped_point": right_border + 1,
-            "right_border": right_border + 1
-        }

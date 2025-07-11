@@ -62,7 +62,10 @@ while running:
             running = False
         elif event.type == pygame.KEYDOWN:
             if event.key == pygame.K_ESCAPE:
-                sorting = False
+                if sorting:
+                    sorting = False
+                else:
+                    running = False
 
             if (event.key == pygame.K_RETURN) and (not sorting):
                 arr = []
@@ -99,9 +102,6 @@ while running:
                 arr_lenght = min(250, arr_lenght + 5)
             if (event.key == pygame.K_q) and (not sorting):
                 arr_lenght = max(10, arr_lenght - 5)
-    
-    # Обновление игрового состояния
-    # (здесь будет ваша игровая логика)
     
     # Отрисовка
     screen.fill(CONFIG_SCREEN["bg_color"])
